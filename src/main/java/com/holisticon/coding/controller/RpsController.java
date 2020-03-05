@@ -1,12 +1,12 @@
-package springexample.demo.controller;
+package com.holisticon.coding.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import springexample.demo.entities.RpsRequest;
-import springexample.demo.entities.RpsResponse;
-import springexample.demo.services.RpsService;
+import com.holisticon.coding.entities.RpsRequest;
+import com.holisticon.coding.entities.RpsResponse;
+import com.holisticon.coding.services.RpsService;
 
 @RestController
 @RequestMapping(path = "/play")

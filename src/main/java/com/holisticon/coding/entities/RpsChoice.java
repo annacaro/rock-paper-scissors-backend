@@ -1,4 +1,4 @@
-package springexample.demo.entities;
+package com.holisticon.coding.entities;
 
 public enum RpsChoice {
     ROCK,

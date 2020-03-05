@@ -1,9 +1,9 @@
-package springexample.demo.services;
+package com.holisticon.coding.services;
 
+import com.holisticon.coding.entities.RpsChoice;
+import com.holisticon.coding.entities.RpsRequest;
+import com.holisticon.coding.entities.RpsResponse;
 import org.springframework.stereotype.Service;
-import springexample.demo.entities.RpsChoice;
-import springexample.demo.entities.RpsRequest;
-import springexample.demo.entities.RpsResponse;
 
 import java.util.Arrays;
 import java.util.List;
