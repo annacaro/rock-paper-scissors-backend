@@ -2,6 +2,7 @@ package springexample.demo.services;
 
 import org.springframework.stereotype.Service;
 import springexample.demo.entities.RpsChoice;
+import springexample.demo.entities.RpsRequest;
 import springexample.demo.entities.RpsResponse;
 
 import java.util.Arrays;
@@ -10,41 +11,53 @@ import java.util.List;
 @Service
 public class RpsService {
 
-    private final List<RpsChoice> allChoices = Arrays.asList(RpsChoice.ROCK, RpsChoice.PAPER, RpsChoice.SCISSORS);
+    private final static List<RpsChoice> allChoices = Arrays.asList(RpsChoice.ROCK, RpsChoice.PAPER, RpsChoice.SCISSORS, RpsChoice.WELL);
 
 
-    public RpsResponse getWinner(RpsChoice userInput) {
-        int random = (int) (Math.random() * 3);
-        RpsResponse response = new RpsResponse();
-        response.setUserChoice(userInput);
-        response.setComputerChoice(allChoices.get(random));
+    public RpsResponse getWinner(RpsRequest requestData) throws IllegalArgumentException {
+        try {
+            RpsChoice userChoice = RpsChoice.valueOf(requestData.getUserChoice());
+            RpsChoice computerChoice = makeRandomChoice(requestData.isWithWell());
+            RpsResponse response = new RpsResponse();
+            response.setUserChoice(userChoice);
+            response.setComputerChoice(computerChoice);
 
-        if (userInput.equals(allChoices.get(random))) {
-            response.setWinner("DEUCE");
-        } else {
-            response.setWinner(calculateWinner(userInput, allChoices.get(random)));
+            if (userChoice.equals(computerChoice)) {
+                response.setWinner("DEUCE");
+            } else {
+                response.setWinner(calculateWinner(userChoice, computerChoice));
+            }
+
+            return response;
+        } catch (IllegalArgumentException e) {
+            return null;
         }
+    }
 
-        return response;
+    public RpsChoice makeRandomChoice(boolean withWell) {
+        int random = withWell ? ((int) (Math.random() * 4)) : ((int) (Math.random() * 3));
+        return allChoices.get(random);
     }
 
     private String calculateWinner(RpsChoice userInput, RpsChoice computerChoice) {
-        if(computerChoice.equals(getWinnersFromChoice(userInput))) {
-            return "YOU";
+        if (getWinnersFromChoice(userInput).contains(computerChoice)) {
+            return "YOU WON";
         } else {
-            return "COMPUTER";
+            return "YOU LOST";
         }
     }
 
-    private RpsChoice getWinnersFromChoice (RpsChoice choice) {
+    private List<RpsChoice> getWinnersFromChoice(RpsChoice choice) {
 
         switch (choice) {
             case ROCK:
-                return RpsChoice.SCISSORS;
+                return Arrays.asList(RpsChoice.SCISSORS);
             case PAPER:
-                return RpsChoice.ROCK;
+                return Arrays.asList(RpsChoice.ROCK, RpsChoice.WELL);
+            case SCISSORS:
+                return Arrays.asList(RpsChoice.PAPER);
             default:
-                return RpsChoice.PAPER;
+                return Arrays.asList(RpsChoice.SCISSORS, RpsChoice.ROCK);
         }
     }
 

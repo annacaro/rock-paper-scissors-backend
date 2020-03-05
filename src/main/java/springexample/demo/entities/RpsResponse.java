@@ -2,9 +2,9 @@ package springexample.demo.entities;
 
 public class RpsResponse {
 
-    RpsChoice userChoice;
-    RpsChoice computerChoice;
-    String winner;
+    private RpsChoice userChoice;
+    private RpsChoice computerChoice;
+    private String winner;
 
     public RpsResponse() {
     }
