@@ -6,7 +6,6 @@
         <groupId>com.holisticon.coding</groupId>
         <artifactId>rock-paper-scissors-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <artifactId>rock-paper-scissors-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
