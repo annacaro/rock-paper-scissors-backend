@@ -11,6 +11,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.holisticon.coding.entities.RpsChoice;
 import com.holisticon.coding.entities.RpsResponse;
 
+import java.util.Optional;
+
 import static org.mockito.ArgumentMatchers.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,38 +30,38 @@ class RpsServiceTest {
     public void getWinnerFromRockAndPaper() {
         Mockito.when(serviceUnderTest.makeRandomChoice(anyBoolean())).thenReturn(RpsChoice.ROCK);
         RpsRequest request = new RpsRequest("PAPER", false);
-        RpsResponse response = serviceUnderTest.getWinner(request);
-        Assertions.assertEquals("YOU WON", response.getWinner());
+        Optional<RpsResponse> response = serviceUnderTest.getWinner(request);
+        Assertions.assertEquals("YOU WON", response.get().getWinner());
     }
 
     @Test
     public void getWinnerFromRockAndRock() {
         Mockito.when(serviceUnderTest.makeRandomChoice(anyBoolean())).thenReturn(RpsChoice.ROCK);
         RpsRequest request = new RpsRequest("ROCK", false);
-        RpsResponse response = serviceUnderTest.getWinner(request);
-        Assertions.assertEquals("DEUCE", response.getWinner());
+        Optional<RpsResponse> response = serviceUnderTest.getWinner(request);
+        Assertions.assertEquals("DEUCE", response.get().getWinner());
     }
 
     @Test
     public void getWinnerFromRockAndScissors() {
         Mockito.when(serviceUnderTest.makeRandomChoice(anyBoolean())).thenReturn(RpsChoice.ROCK);
         RpsRequest request = new RpsRequest("SCISSORS", false);
-        RpsResponse response = serviceUnderTest.getWinner(request);
-        Assertions.assertEquals("YOU LOST", response.getWinner());
+        Optional<RpsResponse> response = serviceUnderTest.getWinner(request);
+        Assertions.assertEquals("YOU LOST", response.get().getWinner());
     }
 
     @Test
     public void getWinnerFromRockAndWell() {
         Mockito.when(serviceUnderTest.makeRandomChoice(anyBoolean())).thenReturn(RpsChoice.ROCK);
         RpsRequest request = new RpsRequest("WELL", true);
-        RpsResponse response = serviceUnderTest.getWinner(request);
-        Assertions.assertEquals("YOU WON", response.getWinner());
+        Optional<RpsResponse> response = serviceUnderTest.getWinner(request);
+        Assertions.assertEquals("YOU WON", response.get().getWinner());
     }
 
     @Test
     public void getWinnerWithInvalidChoice() {
         RpsRequest request = new RpsRequest("Paper", false);
-        RpsResponse response = serviceUnderTest.getWinner(request);
-        Assertions.assertNull(response);
+        Optional<RpsResponse> response = serviceUnderTest.getWinner(request);
+        Assertions.assertFalse(response.isPresent());
     }
 }

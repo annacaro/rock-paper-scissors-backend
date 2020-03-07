@@ -8,6 +8,8 @@ import com.holisticon.coding.entities.RpsRequest;
 import com.holisticon.coding.entities.RpsResponse;
 import com.holisticon.coding.services.RpsService;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping(path = "/play")
 public class RpsController {
@@ -20,11 +22,11 @@ public class RpsController {
     public ResponseEntity play(
             @RequestBody RpsRequest userChoice)
             throws Exception {
-        RpsResponse response = service.getWinner(userChoice);
-        if (response == null) {
+        Optional<RpsResponse> response = service.getWinner(userChoice);
+        if (!response.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Please choose one of the following options: ROCK, PAPER, SCISSORS or WELL");
         } else {
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok(response.get());
         }
 
     }
